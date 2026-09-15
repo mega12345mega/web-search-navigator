@@ -1,7 +1,7 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Web Search Navigator",
-    "version": "0.5.2",
+    "version": "1.5.2",
     "description": "Keyboard shortcuts for Google search, YouTube, Startpage, Brave Search, Google Scholar, Github, Gitlab, and Amazon.",
     "author": "Web Search Navigator",
     "icons": {
@@ -9,24 +9,13 @@
         "48": "icon48.png",
         "128": "icon128.png"
     },
-    "browser_specific_settings": {
-        "gecko": {
-            "id": "{ffadac89-63bb-4b04-be90-8cb2aa323171}",
-            "strict_min_version": "91.0"
-        }
-    },
     "permissions": ["storage"],
     "options_ui": {
         "page": "options_page.html",
-        "chrome_style": true
+        "open_in_tab": true
     },
     "background": {
-        "scripts": [
-            "browser-polyfill.js",
-            "webext-dynamic-content-scripts.js",
-            "background.js"
-        ],
-        "persistent": false
+        "service_worker": "background.js"
     },
     "content_scripts": [
         {
@@ -236,7 +225,7 @@
             ]
         }
     ],
-    "optional_permissions": [
+    "optional_host_permissions": [
         "https://*/*",
         "https://search.brave.com/*",
         "https://startpage.com/*",
@@ -452,5 +441,15 @@
         "https://scholar.google.vg/*",
         "https://scholar.google.vu/*",
         "https://scholar.google.ws/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "browser-polyfill.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
     ]
 }

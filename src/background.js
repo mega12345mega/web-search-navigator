@@ -1,3 +1,5 @@
+importScripts('browser-polyfill.js');
+
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'tabsCreate') {
     browser.tabs
