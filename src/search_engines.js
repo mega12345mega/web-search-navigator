@@ -160,13 +160,6 @@ const selectorElementGetter = (selector) => {
   };
 };
 
-const tabElementGetter = (name) => {
-  return () => {
-    let tabs = document.querySelector("div[role=navigation]");
-    return [...tabs.getElementsByTagName("a")].find(tab => tab.textContent === name) ?? null;
-  };
-};
-
 const nParent = (element, n) => {
   while (n > 0 && element) {
     element = element.parentElement;
@@ -575,16 +568,22 @@ class GoogleSearch {
     return selectorElementGetter('#pnnext');
   }
   get tabs() {
+    const tabGetter = (name) => {
+      return () => {
+        let tabs = document.querySelector("div[role=navigation]");
+        return [...tabs.getElementsByTagName("a")].find(tab => tab.textContent === name) ?? null;
+      };
+    };
     return {
-      navigateSearchTab: tabElementGetter("All"),
-      navigateImagesTab: tabElementGetter("Images"),
-      navigateVideosTab: tabElementGetter("Videos"),
-      navigateMapsTab: tabElementGetter("Maps"),
-      navigateNewsTab: tabElementGetter("News"),
-      navigateShoppingTab: tabElementGetter("Shopping"),
-      navigateBooksTab: tabElementGetter("Books"),
-      navigateFlightsTab: tabElementGetter("Flights"),
-      navigateFinancialTab: tabElementGetter("Finance"),
+      navigateSearchTab: tabGetter("All"),
+      navigateImagesTab: tabGetter("Images"),
+      navigateVideosTab: tabGetter("Videos"),
+      navigateMapsTab: tabGetter("Maps"),
+      navigateNewsTab: tabGetter("News"),
+      navigateShoppingTab: tabGetter("Shopping"),
+      navigateBooksTab: tabGetter("Books"),
+      navigateFlightsTab: tabGetter("Flights"),
+      navigateFinancialTab: tabGetter("Finance"),
     };
   }
 
@@ -639,75 +638,18 @@ class GoogleSearch {
   }
 
   changeImageSize(size) {
-    const sizeOptions = {
-      LARGE: {value: 0, name: 'Large', code: 'l'},
-      MEDIUM: {value: 1, name: 'Medium', code: 'e'},
-      ICON: {value: 2, name: 'Icon', code: 'i'},
-    };
-    const openTool = document.querySelector(
-        '[class="PNyWAd ZXJQ7c"][jsname="I4bIT"]',
-    );
-    if (openTool != null) {
-      openTool.click();
-    }
-    const openSizeDropDown = document.querySelector('[aria-label="Size"]');
-    if (openSizeDropDown != null) {
-      openSizeDropDown.click();
-    }
-    const dropDownWithSize = document.querySelector(
-        '[class="xFo9P r9PaP Fmo8N"][jsname="wLFV5d"]',
-    );
-    const getButton = (selector) => {
-      let button;
-      if (document.querySelector(selector) != null) {
-        button = document.querySelector(selector);
-      } else {
-        button = null;
-      }
-      return button;
-    };
-    const setImageSize = (dropDownWithSize, buttonSelector) => {
-      let button = getButton(buttonSelector);
-      if (dropDownWithSize == null && button != null) {
-        button.click();
-      } else if (dropDownWithSize != null && button == null) {
-        dropDownWithSize.click();
-        button = getButton(buttonSelector);
-        button.click();
-      } else if (dropDownWithSize != null && button != null) {
-        button.click();
-      }
+    const filter = (name) => {
+      [...document.getElementById("top_nav").getElementsByTagName("a")].find(a => a.textContent === name)?.click();
     };
     switch (size) {
-      case sizeOptions.LARGE.code:
-        if (
-          dropDownWithSize == null ||
-          dropDownWithSize.getAttribute('aria-label') != sizeOptions.LARGE.name
-        ) {
-          setImageSize(
-              dropDownWithSize,
-              '[class="MfLWbb"][aria-label="Large"]',
-          );
-        }
+      case "l":
+        filter("Large");
         break;
-      case sizeOptions.MEDIUM.code:
-        if (
-          dropDownWithSize == null ||
-          dropDownWithSize.getAttribute('aria-label') != sizeOptions.MEDIUM.name
-        ) {
-          setImageSize(
-              dropDownWithSize,
-              '[class="MfLWbb"][aria-label="Medium"]',
-          );
-        }
+      case "e":
+        filter("Medium");
         break;
-      case sizeOptions.ICON.code:
-        if (
-          dropDownWithSize == null ||
-          dropDownWithSize.getAttribute('aria-label') != sizeOptions.ICON.name
-        ) {
-          setImageSize(dropDownWithSize, '[class="MfLWbb"][aria-label="Icon"]');
-        }
+      case "i":
+        filter("Icon");
         break;
       default:
         break;
