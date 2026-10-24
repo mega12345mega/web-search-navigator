@@ -160,6 +160,13 @@ const selectorElementGetter = (selector) => {
   };
 };
 
+const tabElementGetter = (name) => {
+  return () => {
+    let tabs = document.querySelector("div[role=navigation]");
+    return [...tabs.getElementsByTagName("a")].find(tab => tab.textContent === name) ?? null;
+  };
+};
+
 const nParent = (element, n) => {
   while (n > 0 && element) {
     element = element.parentElement;
@@ -552,48 +559,6 @@ class GoogleSearch {
     });
   }
 
-  static #imageSearchTabs() {
-    const visibleTabs = document.querySelectorAll('.T47uwc > a');
-    // NOTE: The order of the tabs after the first two is dependent on the
-    // query. For example:
-    // - "cats": videos, news, maps
-    // - "trump": news, videos, maps
-    // - "california": maps, news, videos
-    return {
-      navigateSearchTab: visibleTabs[0],
-      navigateMapsTab: selectorElementGetter(
-          '.T47uwc > a[href*="maps.google."]',
-      ),
-      navigateVideosTab: selectorElementGetter('.T47uwc > a[href*="&tbm=vid"]'),
-      navigateNewsTab: selectorElementGetter('.T47uwc > a[href*="&tbm=nws"]'),
-      navigateShoppingTab: selectorElementGetter(
-          'a[role="menuitem"][href*="&tbm=shop"]',
-      ),
-      navigateBooksTab: selectorElementGetter(
-          'a[role="menuitem"][href*="&tbm=bks"]',
-      ),
-      navigateFlightsTab: selectorElementGetter(
-          'a[role="menuitem"][href*="&tbm=flm"]',
-      ),
-      navigateFinancialTab: selectorElementGetter(
-          'a[role="menuitem"][href*="/finance?"]',
-      ),
-      // TODO: Disable image search's default keybindings to avoid confusing the
-      // user, because the default keybindings can cause an indenepdent
-      // navigation of the image results with another outline. The code below
-      // doesn't work because the key event is captured by the image search
-      // code, since Moustrap is bound on document, instead of a more specific
-      // container. The following does work, but the code needs some changes to
-      // support binding on a specific container per search engine:
-      //
-      // Mousetrap(document.querySelector('.islrc')).bind ...
-      // Mousetrap(document.querySelector('#Sva75c')).bind ...
-      //
-      // navigatePreviousResultPage: null,
-      // navigateNextResultPage: null,
-    };
-  }
-
   // Array storing tuples of tabs navigation keybindings and their corresponding
   // CSS selector
   get previousPageButton() {
@@ -610,22 +575,16 @@ class GoogleSearch {
     return selectorElementGetter('#pnnext');
   }
   get tabs() {
-    if (GoogleSearch.#isImagesTab()) {
-      return GoogleSearch.#imageSearchTabs();
-    }
     return {
-      navigateSearchTab: selectorElementGetter(
-          // eslint-disable-next-line max-len
-          'a[href*="/search?q="]:not([href*="&tbm="]):not([href*="maps.google."])',
-      ),
-      navigateImagesTab: selectorElementGetter('a[href*="&tbm=isch"]'),
-      navigateVideosTab: selectorElementGetter('a[href*="&tbm=vid"]'),
-      navigateMapsTab: selectorElementGetter('a[href*="maps.google."]'),
-      navigateNewsTab: selectorElementGetter('a[href*="&tbm=nws"]'),
-      navigateShoppingTab: selectorElementGetter('a[href*="&tbm=shop"]'),
-      navigateBooksTab: selectorElementGetter('a[href*="&tbm=bks"]'),
-      navigateFlightsTab: selectorElementGetter('a[href*="&tbm=flm"]'),
-      navigateFinancialTab: selectorElementGetter('[href*="/finance?"]'),
+      navigateSearchTab: tabElementGetter("All"),
+      navigateImagesTab: tabElementGetter("Images"),
+      navigateVideosTab: tabElementGetter("Videos"),
+      navigateMapsTab: tabElementGetter("Maps"),
+      navigateNewsTab: tabElementGetter("News"),
+      navigateShoppingTab: tabElementGetter("Shopping"),
+      navigateBooksTab: tabElementGetter("Books"),
+      navigateFlightsTab: tabElementGetter("Flights"),
+      navigateFinancialTab: tabElementGetter("Finance"),
     };
   }
 
