@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Web Search Navigator",
-    "version": "1.5.2",
+    "version": "1.0.0",
     "description": "Keyboard shortcuts for Google search, YouTube, Startpage, Brave Search, Google Scholar, Github, Gitlab, and Amazon.",
     "author": "Web Search Navigator",
     "icons": {
