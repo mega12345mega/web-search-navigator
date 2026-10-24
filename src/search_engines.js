@@ -576,6 +576,7 @@ class GoogleSearch {
     };
     return {
       navigateSearchTab: tabGetter("All"),
+      navigateWebTab: tabGetter("Web"),
       navigateImagesTab: tabGetter("Images"),
       navigateVideosTab: tabGetter("Videos"),
       navigateMapsTab: tabGetter("Maps"),

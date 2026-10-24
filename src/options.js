@@ -132,6 +132,7 @@ const DEFAULT_KEYBINDINGS = {
     'ctrl+shift+space',
   ],
   navigateSearchTab: ['a', 's'],
+  navigateWebTab: ['w'],
   navigateImagesTab: ['i'],
   navigateVideosTab: ['v'],
   navigateMapsTab: ['m'],

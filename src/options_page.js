@@ -83,6 +83,7 @@ const KEYBINDING_TO_DIV = {
   navigateNewTabKey: 'navigate-new-tab-key',
   navigateNewTabBackgroundKey: 'navigate-new-tab-background-key',
   navigateSearchTab: 'navigate-search-tab',
+  navigateWebTab: 'navigate-web-tab',
   navigateImagesTab: 'navigate-images-tab',
   navigateVideosTab: 'navigate-videos-tab',
   navigateMapsTab: 'navigate-maps-tab',
