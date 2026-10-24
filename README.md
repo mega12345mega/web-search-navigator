@@ -1,3 +1,9 @@
+# Fork Changes
+* Moved to manifest v3 (based on [44103's fork](https://github.com/infokiller/web-search-navigator/pull/671))
+* Added keybind for Google web tab (default <kbd>w</kbd>)
+* Fixed Google tab navigation (and made it more robust)
+* Fixed Google image filtering by size (and made it more robust)
+
 # ![Logo](./src/icon48.png?raw=true) Web Search Navigator
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/cohamjploocgoejdfanacfgkhjkhdkek?label=Chrome)](https://chrome.google.com/webstore/detail/web-search-navigator/cohamjploocgoejdfanacfgkhjkhdkek)
