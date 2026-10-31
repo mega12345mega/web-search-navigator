@@ -570,7 +570,7 @@ class GoogleSearch {
   get tabs() {
     const tabGetter = (name) => {
       return () => {
-        let tabs = document.querySelector("div[role=navigation]");
+        let tabs = document.querySelector("#main div[role=navigation]");
         return [...tabs.getElementsByTagName("a")].find(tab => tab.textContent === name) ?? null;
       };
     };
